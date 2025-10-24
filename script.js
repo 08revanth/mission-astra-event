@@ -538,6 +538,7 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
 
     // --- NEW: STATE PERSISTENCE & INITIAL LOAD ---
     function init() {
+        const savedScreen = localStorage.getItem('currentScreen');
          if (savedScreen === 'round-2-transition-screen' || 
         savedScreen === 'round-3-selection-screen' || 
         savedScreen === 'round-3-story-screen' || 
