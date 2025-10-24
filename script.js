@@ -538,17 +538,35 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
 
     // --- NEW: STATE PERSISTENCE & INITIAL LOAD ---
     function init() {
-        const savedScreen = localStorage.getItem('currentScreen');
-        // Do not load into a puzzle state, start from a logical screen
-        if (savedScreen && (savedScreen === 'round-3-selection-screen' || savedScreen === 'round-2-transition-screen')) {
-            showScreen(savedScreen);
-            if (savedScreen === 'round-3-selection-screen') {
-                initializeRound3Selection();
-            }
-        } else {
-            showScreen('welcome-screen');
+         if (savedScreen === 'round-2-transition-screen' || 
+        savedScreen === 'round-3-selection-screen' || 
+        savedScreen === 'round-3-story-screen' || 
+        savedScreen === 'final-screen' || 
+        savedScreen === 'victory-screen') {
+            
+        showScreen(savedScreen); // Show the saved screen first
+
+        // Special handling for the transition screen
+        if (savedScreen === 'round-2-transition-screen') {
+             // Make sure the button to proceed is visible
+             proceedToRound3Button.classList.remove('hidden');
+             // Display generic text since we lost the win/loss state on refresh
+             round1ResultHeading.innerText = "Round 1 Status"; 
+             round2IntroParagraph.innerText = "Continue your journey from here.";
         }
+        
+        // If loading team select, re-initialize buttons
+        if (savedScreen === 'round-3-selection-screen') {
+            initializeRound3Selection();
+        }
+        // If loading story/final/victory, just showing the screen is enough
+
+    } else {
+        // Default to welcome screen for puzzles or unknown/initial states
+        showScreen('welcome-screen');
+        localStorage.setItem('currentScreen', 'welcome-screen'); // Reset storage
     }
+}
     
     init(); // Run the initial load function
 });
