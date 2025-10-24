@@ -1,4 +1,4 @@
-// FINAL SCRIPT - Rebuilt & Organized
+// FINAL SCRIPT - State Persistence & Secret Key Implemented
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const ROUND_1_TIME_LIMIT_MINS = 20;
     const JIGSAW_ROWS = 6;
     const JIGSAW_COLS = 6;
-    const ASTRA_NAMES = ["Vayu Astra", "Agni Astra", "Vajra Astra", "Brahmastra", "Pashupatastra"];
-    const blackPieceIndexes = [0, 1, 4, 5, 12, 17]; // UPDATED
+    const ASTRA_NAMES = ["Pashupatastra", "Vayu Astra", "Agni Astra", "Vajra Astra", "Brahmastra"];
+    const blackPieceIndexes = [0, 1, 4, 5, 12, 17];
+
+    // --- Team Challenge Data with SECRET KEYS ---
 
     const teamChallenges = [
-        { team: 1, asuraForm: `The sky turned crimson as the Asura descended — his roar splitting mountains, his gaze setting oceans ablaze. His presence was heavier than gravity itself — a darkness that crushed even light beneath its will. For a thousand years, he had slept beneath the cosmic depths, waiting for mankind’s arrogance to summon him again.
+        { team: 1, secretKey: "SILENCE", asuraForm: `The sky turned crimson as the Asura descended — his roar splitting mountains, his gaze setting oceans ablaze. His presence was heavier than gravity itself — a darkness that crushed even light beneath its will. For a thousand years, he had slept beneath the cosmic depths, waiting for mankind’s arrogance to summon him again.
 
 The five warriors stood upon the edge of existence, their hearts unwavering, their Astras gleaming with divine power. Before them shimmered five layers of protection — the seals of the Asura — each a test beyond imagination.
 
@@ -31,7 +33,7 @@ Asura’s laughter tore through the silence: “You think you’ve broken my shi
 Light collided with darkness, and for a brief moment, victory seemed theirs. But suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Vayu Astra", "Agni Astra", "Vajra Astra", "Brahmastra", "Pashupatastra"] },
-        { team: 2, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 2, secretKey: "COSMOS", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -52,7 +54,7 @@ The fifth and final layer pulsed with the essence of creation itself, alive and 
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Vajra Astra", "Agni Astra", "Pashupatastra", "Brahmastra", "Vayu Astra"] },
-        { team: 3, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 3, secretKey: "DESTINY", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -73,7 +75,7 @@ The Asura roared, his ancient fury echoing across mountains and valleys. The war
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Agni Astra", "Brahmastra", "Vayu Astra", "Pashupatastra", "Vajra Astra"] },
-        { team: 4, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 4, secretKey: "ETERNITY", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -98,7 +100,7 @@ The Asura roared, his ancient fury echoing across mountains and valleys. The war
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Vajra Astra", "Brahmastra", "Agni Astra", "Vayu Astra", "Pashupatastra"] },
-        { team: 5, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 5, secretKey: "BALANCE", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -119,7 +121,7 @@ Finally, silence reigned. Time halted. The universe held its breath. And through
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Brahmastra", "Agni Astra", "Vajra Astra", "Pashupatastra", "Vayu Astra"] },
-        { team: 6, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 6, secretKey: "CHAOS", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -138,7 +140,7 @@ Asura’s voice thundered: “You play with my elements as if they obey you… b
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Pashupatastra", "Vajra Astra", "Agni Astra", "Brahmastra", "Vayu Astra"] },
-        { team: 7, asuraForm:  `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 7, secretKey: "COURAGE", asuraForm:  `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -157,7 +159,7 @@ Asura laughed, voice echoing through fire and thunder: “Your courage amuses me
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Brahmastra", "Vajra Astra", "Vayu Astra", "Pashupatastra", "Agni Astra"] },
-        { team: 8, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 8, secretKey: "STORM", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -174,7 +176,7 @@ Asura’s mockery roared: “You bend my storms, wield my light, command my fire
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Agni Astra", "Pashupatastra", "Vajra Astra", "Vayu Astra", "Brahmastra"] },
-        { team: 9, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 9, secretKey: "CREATION", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -193,7 +195,7 @@ Asura’s voice hissed through the ashes: “You think creation answers to you? 
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Pashupatastra", "Brahmastra", "Agni Astra", "Vajra Astra", "Vayu Astra"] },
-        { team: 10, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 10, secretKey: "FURY", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -210,7 +212,7 @@ Asura’s laughter echoed: “Pathetic illusions of power! You mimic gods — bu
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Vajra Astra", "Vayu Astra", "Brahmastra", "Pashupatastra", "Agni Astra"] },
-        { team: 11, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 11, secretKey: "VOID", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -229,7 +231,7 @@ Asura sneered: “You silence my void, twist my flame, and calm my winds… Tell
 Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eyes blazing like molten stars, and shadows fell across the world. Everything went black.
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Vayu Astra", "Pashupatastra", "Vajra Astra", "Agni Astra", "Brahmastra"] },
-        { team: 12, asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
+        { team: 12, secretKey: "WRATH", asuraForm: `In the sky stained crimson, the Asura descended, his roar splitting mountains, his eyes burning with the fury of forgotten ages. More fearsome than the wrath of the cosmos itself, his gaze made rivers tremble and mountains shudder. After a thousand years of slumber, he had awakened — summoned by the arrogance and folly of humankind.
 
 A time of grave peril had befallen Earth. The gods and protectors of mankind — five chosen warriors — gathered to face this nightmare. Only through pure intent, focus, and determination did each ruler grant the warriors one divine Astra. Thus, after their arduous devotion, the warriors possessed all five divine Astras.
 
@@ -290,13 +292,14 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     function showScreen(screenId) {
         screens.forEach(s => s.classList.add('hidden'));
         document.getElementById(screenId).classList.remove('hidden');
+        // NEW: Save the current screen to localStorage
+        localStorage.setItem('currentScreen', screenId);
     }
 
     startMissionButton.addEventListener('click', () => showScreen('story-screen'));
     startRound1Button.addEventListener('click', () => { showScreen('round-1-screen'); initializeRound1(); });
     proceedToRound3Button.addEventListener('click', () => { showScreen('round-3-selection-screen'); initializeRound3Selection(); });
     submitSequenceButton.addEventListener('click', checkRound3Sequence);
-    // REMOVED event listener for retry button
     proceedToPuzzleButton.addEventListener('click', () => showScreen('round-3-puzzle-screen'));
     backToStoryButton.addEventListener('click', () => showScreen('round-3-story-screen'));
     
@@ -445,13 +448,27 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
+    // UPDATED with Secret Key logic
     function selectTeamForRound3(event) {
         const teamId = event.target.dataset.teamId;
         currentTeamChallenge = teamChallenges.find(c => c.team == teamId);
-        r3TeamTitle.innerText = `TEAM ${teamId}'S CHALLENGE`;
-        r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm;
-        showScreen('round-3-story-screen');
-        setupRound3Puzzle(currentTeamChallenge);
+
+        const enteredKey = prompt(`The Oracle demands the secret key for Team ${teamId}:`);
+        
+        // If user clicks cancel or leaves it blank
+        if (!enteredKey) {
+            return; 
+        }
+        
+        // Compare entered key with the correct key (case-insensitive)
+        if (enteredKey.trim().toUpperCase() === currentTeamChallenge.secretKey.toUpperCase()) {
+            r3TeamTitle.innerText = `TEAM ${teamId}'S CHALLENGE`;
+            r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm;
+            showScreen('round-3-story-screen');
+            setupRound3Puzzle(currentTeamChallenge);
+        } else {
+            alert("Incorrect key. The path remains sealed.");
+        }
     }
 
     function setupRound3Puzzle(challenge) {
@@ -480,24 +497,16 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     }
     
     function addAstraDropEvents(target) {
-        target.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            target.classList.add('drag-over');
-        });
-        target.addEventListener('dragleave', (e) => {
-            target.classList.remove('drag-over');
-        });
+        target.addEventListener('dragover', (e) => { e.preventDefault(); target.classList.add('drag-over'); });
+        target.addEventListener('dragleave', (e) => { target.classList.remove('drag-over'); });
         target.addEventListener('drop', (e) => {
             e.preventDefault();
             target.classList.remove('drag-over');
             if (!draggedAstraElement) return;
-
-            // If the target already has an item, swap it back to the source
             if (target.hasChildNodes() && target.firstChild.classList?.contains('astra-item')) {
                 const itemInTarget = target.firstChild;
                 draggedAstraElement.parentElement.appendChild(itemInTarget);
             }
-            
             target.appendChild(draggedAstraElement);
         });
     }
@@ -515,7 +524,6 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
 
         const correctSequence = currentTeamChallenge.correctSequence.map(a => a.trim().toLowerCase());
-
         const isCorrect = submittedSequence.length === correctSequence.length &&
                           submittedSequence.every((a, i) => a === correctSequence[i]);
 
@@ -527,4 +535,20 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
             showScreen('final-screen');
         }
     }
+
+    // --- NEW: STATE PERSISTENCE & INITIAL LOAD ---
+    function init() {
+        const savedScreen = localStorage.getItem('currentScreen');
+        // Do not load into a puzzle state, start from a logical screen
+        if (savedScreen && (savedScreen === 'round-3-selection-screen' || savedScreen === 'round-2-transition-screen')) {
+            showScreen(savedScreen);
+            if (savedScreen === 'round-3-selection-screen') {
+                initializeRound3Selection();
+            }
+        } else {
+            showScreen('welcome-screen');
+        }
+    }
+    
+    init(); // Run the initial load function
 });
