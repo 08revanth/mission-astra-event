@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Astra</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+    <div class="background-logo logo-top-left"></div>
+    <div class="background-logo logo-top-right"></div> <div id="welcome-screen" class="screen active">
+        <h1>MISSION ASTRA</h1>
+        <p>Warriors, the cosmic balance is threatened. The Asura stirs.</p>
+        <p>Your journey begins now. The fate of realms rests in your hands.</p>
+        <button class="cta-button pulse" id="start-mission-button">INITIATE MISSION</button>
+    </div>
+
+    <div id="story-screen" class="screen hidden">
+        <p class="story-text">In a sky stained crimson, the Asura descended, his eyes burning with the fury of forgotten ages.</p>
+        <p class="story-text">He is here to shatter the Earth, and you, the chosen warriors, must defend it.</p>
+        <p class="story-text">Your quest begins with the first Astra, a test of precision and focus, to unravel the initial seal.</p>
+        <button class="cta-button" id="start-round-1-button">EMBARK ON THE FIRST TRIAL</button>
+    </div>
+
+    <div id="round-1-screen" class="screen hidden">
+        <h2>ROUND 1: THE REALM OF MIND</h2>
+        <div id="timer-display">TIME REMAINING: <span id="countdown">20:00</span></div>
+        <p class="round-objective">Reconstruct the ancient glyph to reveal the first Astra. Time is of the essence, warrior.</p>
+        <div class="puzzle-area">
+            <div class="puzzle-left-panel">
+                <div class="puzzle-reference">
+                    <h3>REFERENCE GLYPH</h3>
+                    <img src="puzzle-image.jpg" alt="Reference Puzzle Image" class="reference-image">
+                </div>
+                <div id="jigsaw-pieces-container">
+                    <h3>AVAILABLE FRAGMENTS</h3>
+                    <div id="jigsaw-pieces"></div>
+                </div>
+            </div>
+            <div id="jigsaw-board"></div>
+        </div>
+        <p class="jigsaw-message" id="jigsaw-status"></p>
+    </div>
+
+    <div id="round-2-transition-screen" class="screen hidden">
+        <h2 id="round-1-result"></h2>
+        <p id="round-2-intro"></p>
+        <p class="dramatic-text">Seek out the <span class="highlight">Oracle of the Four Courts</span>. They hold the key to the next challenge, "The Chaturaasthanas." There, you will undertake physical trials to earn the remaining Astras.</p>
+        <p class="dramatic-text">Return to this interface when all five Astras are within your grasp, for then the final confrontation awaits!</p>
+        <button class="cta-button pulse hidden" id="proceed-to-round-3-button">WE POSSESS THE ASTRAS! PROCEED TO FINAL BATTLE</button>
+    </div>
+    
+    <div id="round-3-selection-screen" class="screen hidden">
+        <h2>ROUND 3: THE ASURA'S TRUE FORM</h2>
+        <p>With the Astras gathered, you stand before the Asura's true manifestation. But beware, his form shifts, his defenses unique to each challenger.</p>
+        <p>Choose your team designation, and prepare to confront *your* Asura.</p>
+        <div id="team-grid"></div>
+    </div>
+
+    <div id="round-3-story-screen" class="screen hidden">
+        <h2 id="r3-team-title"></h2>
+        <div id="asura-info">
+            <h2>THE PROPHECY OF YOUR FOE:</h2>
+            <p id="r3-story-display"></p>
+        </div>
+        <button class="cta-button" id="proceed-to-puzzle-button">PROCEED TO THE BATTLEFIELD</button>
+    </div>
+
+    <div id="round-3-puzzle-screen" class="screen hidden">
+        <button class="cta-button" id="back-to-story-button">REVIEW THE PROPHECY</button>
+        <div id="challenge-area">
+            <div id="sequence-container">
+                <h3>SHATTER THE LAYERS</h3>
+                <div class="sequence-slot" data-layer="1"></div>
+                <div class="sequence-slot" data-layer="2"></div>
+                <div class="sequence-slot" data-layer="3"></div>
+                <div class="sequence-slot" data-layer="4"></div>
+                <div class="sequence-slot" data-layer="5"></div>
+            </div>
+            <div id="astra-bank">
+                <h3>AVAILABLE ASTRAS</h3>
+            </div>
+        </div>
+        <p class="round-objective" id="round-3-message">Arrange the Astras in the correct sequence to pierce his defenses!</p>
+        <button class="cta-button pulse" id="submit-sequence-button">UNLEASH THE ASTRAS</button>
+    </div>
+
+    <div id="final-screen" class="screen hidden">
+        <h2 id="final-outcome-text"></h2>
+        <div id="failure-message" class="hidden">
+            <p class="dramatic-text">THE ASURA LAUGHS! Your sequence falters. The layers remain unbroken!</p>
+            <p class="dramatic-text">Your attempt has been recorded. The battle is lost.</p>
+        </div>
+    </div>
+
+    <div id="victory-screen" class="screen hidden">
+        <div class="victory-title">VICTORY</div>
+        <img src="asura-defeated.jpg" alt="Asura Vanquished" class="victory-image">
+        <div class="victory-subtitle">THE ASURA HAS BEEN VANQUISHED!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
