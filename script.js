@@ -1,14 +1,11 @@
 
-
 document.addEventListener('DOMContentLoaded', () => {
     
- 
     const ROUND_1_TIME_LIMIT_MINS = 20;
     const JIGSAW_ROWS = 6;
     const JIGSAW_COLS = 6;
     const ASTRA_NAMES = ["Pashupatastra", "Vayu Astra", "Agni Astra", "Vajra Astra", "Brahmastra"];
-    const blackPieceIndexes = [0, 1, 4, 5, 12, 17];
-
+    const blackPieceIndexes = [0, 1, 4, 5, 12, 17]; // UPDATED
 
     const teamChallenges = [
         { team: 1, secretKey: "SILENCE", asuraForm: `The sky turned crimson as the Asura descended — his roar splitting mountains, his gaze setting oceans ablaze. His presence was heavier than gravity itself — a darkness that crushed even light beneath its will. For a thousand years, he had slept beneath the cosmic depths, waiting for mankind’s arrogance to summon him again.
@@ -248,8 +245,7 @@ Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eye
 
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Brahmastra", "Vayu Astra", "Pashupatastra", "Agni Astra", "Vajra Astra"] },
     ];
-
-
+    
     const screens = document.querySelectorAll('.screen');
     const startMissionButton = document.getElementById('start-mission-button');
     const startRound1Button = document.getElementById('start-round-1-button');
@@ -272,18 +268,15 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     const finalOutcomeText = document.getElementById('final-outcome-text');
     const failureMessage = document.getElementById('failure-message');
 
- 
     let round1TimerInterval;
     let draggedJigsawPiece = null;
     let round1CompletedSuccessfully = false;
     let currentTeamChallenge = null;
     let draggedAstraElement = null;
 
-    
     function showScreen(screenId) {
         screens.forEach(s => s.classList.add('hidden'));
         document.getElementById(screenId).classList.remove('hidden');
-        // NEW: Save the current screen to localStorage
         localStorage.setItem('currentScreen', screenId);
     }
 
@@ -294,7 +287,6 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     proceedToPuzzleButton.addEventListener('click', () => showScreen('round-3-puzzle-screen'));
     backToStoryButton.addEventListener('click', () => showScreen('round-3-story-screen'));
     
-
     function updateJigsawScore() {
         let correctPieces = 0;
         const totalSolvablePieces = (JIGSAW_ROWS * JIGSAW_COLS) - blackPieceIndexes.length;
@@ -441,15 +433,11 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
 
         const enteredKey = prompt(`The Oracle demands the secret key for Team ${teamId}:`);
         
-
-        if (!enteredKey) {
-            return; 
-        }
+        if (!enteredKey) return; 
         
-        // Compare entered key with the correct key (case-insensitive)
         if (enteredKey.trim().toUpperCase() === currentTeamChallenge.secretKey.toUpperCase()) {
             r3TeamTitle.innerText = `TEAM ${teamId}'S CHALLENGE`;
-            r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm;
+            r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm; // Use full stories
             showScreen('round-3-story-screen');
             setupRound3Puzzle(currentTeamChallenge);
         } else {
@@ -489,10 +477,13 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
             e.preventDefault();
             target.classList.remove('drag-over');
             if (!draggedAstraElement) return;
+
+            // If the target already has an item, swap it back to the source
             if (target.hasChildNodes() && target.firstChild.classList?.contains('astra-item')) {
                 const itemInTarget = target.firstChild;
                 draggedAstraElement.parentElement.appendChild(itemInTarget);
             }
+            
             target.appendChild(draggedAstraElement);
         });
     }
@@ -510,6 +501,7 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
 
         const correctSequence = currentTeamChallenge.correctSequence.map(a => a.trim().toLowerCase());
+
         const isCorrect = submittedSequence.length === correctSequence.length &&
                           submittedSequence.every((a, i) => a === correctSequence[i]);
 
@@ -522,41 +514,31 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
-  
     function init() {
-    const savedScreen = localStorage.getItem('currentScreen');
-    
-   
-    if (savedScreen === 'round-2-transition-screen' || 
-        savedScreen === 'round-3-selection-screen' || 
-        savedScreen === 'round-3-story-screen' || 
-        savedScreen === 'final-screen' || 
-        savedScreen === 'victory-screen') {
-            
-        showScreen(savedScreen); 
-
-
-        if (savedScreen === 'round-2-transition-screen') {
-
-             proceedToRound3Button.classList.remove('hidden');
-      
-             round1ResultHeading.innerText = "Round 1 Status"; 
-             round2IntroParagraph.innerText = "Continue your journey from here.";
+        const savedScreen = localStorage.getItem('currentScreen');
+        
+        if (savedScreen === 'final-screen' || savedScreen === 'victory-screen') {
+            showScreen('welcome-screen');
+            localStorage.setItem('currentScreen', 'welcome-screen');
+        } 
+        else if (savedScreen === 'round-2-transition-screen' || 
+                 savedScreen === 'round-3-selection-screen' || 
+                 savedScreen === 'round-3-story-screen') {
+            showScreen(savedScreen);
+            if (savedScreen === 'round-2-transition-screen') {
+                 proceedToRound3Button.classList.remove('hidden');
+                 round1ResultHeading.innerText = "Round 1 Status"; 
+                 round2IntroParagraph.innerText = "Continue your journey from here.";
+            }
+            if (savedScreen === 'round-3-selection-screen') {
+                initializeRound3Selection();
+            }
+        } 
+        else {
+            showScreen('welcome-screen');
+            localStorage.setItem('currentScreen', 'welcome-screen');
         }
-       
-        if (savedScreen === 'round-3-selection-screen') {
-            initializeRound3Selection();
-        }
-       
-
-    } else {
-      
-        showScreen('welcome-screen');
-        localStorage.setItem('currentScreen', 'welcome-screen'); 
     }
-}
-
-init();
     
     init(); 
 });
