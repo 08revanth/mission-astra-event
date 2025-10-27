@@ -1,17 +1,14 @@
-// FINAL SCRIPT - State Persistence & Secret Key Implemented
+
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // -------------------
-    // --- CONFIGURATION ---
-    // -------------------
+    
     const ROUND_1_TIME_LIMIT_MINS = 20;
     const JIGSAW_ROWS = 6;
     const JIGSAW_COLS = 6;
     const ASTRA_NAMES = ["Pashupatastra", "Vayu Astra", "Agni Astra", "Vajra Astra", "Brahmastra"];
     const blackPieceIndexes = [0, 1, 4, 5, 12, 17];
 
-    // --- Team Challenge Data with SECRET KEYS ---
 
     const teamChallenges = [
         { team: 1, secretKey: "SILENCE", asuraForm: `The sky turned crimson as the Asura descended — his roar splitting mountains, his gaze setting oceans ablaze. His presence was heavier than gravity itself — a darkness that crushed even light beneath its will. For a thousand years, he had slept beneath the cosmic depths, waiting for mankind’s arrogance to summon him again.
@@ -252,9 +249,7 @@ Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eye
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Brahmastra", "Vayu Astra", "Pashupatastra", "Agni Astra", "Vajra Astra"] },
     ];
 
-    // -------------------
-    // --- DOM ELEMENTS ---
-    // -------------------
+   
     const screens = document.querySelectorAll('.screen');
     const startMissionButton = document.getElementById('start-mission-button');
     const startRound1Button = document.getElementById('start-round-1-button');
@@ -277,22 +272,17 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     const finalOutcomeText = document.getElementById('final-outcome-text');
     const failureMessage = document.getElementById('failure-message');
 
-    // -------------------
-    // --- STATE VARIABLES ---
-    // -------------------
+
     let round1TimerInterval;
     let draggedJigsawPiece = null;
     let round1CompletedSuccessfully = false;
     let currentTeamChallenge = null;
     let draggedAstraElement = null;
 
-    // -------------------
-    // --- CORE NAVIGATION & EVENT LISTENERS ---
-    // -------------------
+ 
     function showScreen(screenId) {
         screens.forEach(s => s.classList.add('hidden'));
         document.getElementById(screenId).classList.remove('hidden');
-        // NEW: Save the current screen to localStorage
         localStorage.setItem('currentScreen', screenId);
     }
 
@@ -303,9 +293,7 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     proceedToPuzzleButton.addEventListener('click', () => showScreen('round-3-puzzle-screen'));
     backToStoryButton.addEventListener('click', () => showScreen('round-3-story-screen'));
     
-    // -------------------
-    // --- ROUND 1 LOGIC ---
-    // -------------------
+
     function updateJigsawScore() {
         let correctPieces = 0;
         const totalSolvablePieces = (JIGSAW_ROWS * JIGSAW_COLS) - blackPieceIndexes.length;
@@ -433,9 +421,7 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
     
-    // -------------------
-    // --- ROUND 3 LOGIC ---
-    // -------------------
+
     function initializeRound3Selection() {
         teamGrid.innerHTML = '';
         for (let i = 1; i <= teamChallenges.length; i++) {
@@ -448,19 +434,18 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
-    // UPDATED with Secret Key logic
+
     function selectTeamForRound3(event) {
         const teamId = event.target.dataset.teamId;
         currentTeamChallenge = teamChallenges.find(c => c.team == teamId);
 
         const enteredKey = prompt(`The Oracle demands the secret key for Team ${teamId}:`);
         
-        // If user clicks cancel or leaves it blank
+  
         if (!enteredKey) {
             return; 
         }
         
-        // Compare entered key with the correct key (case-insensitive)
         if (enteredKey.trim().toUpperCase() === currentTeamChallenge.secretKey.toUpperCase()) {
             r3TeamTitle.innerText = `TEAM ${teamId}'S CHALLENGE`;
             r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm;
@@ -536,42 +521,42 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
-    // --- NEW: STATE PERSISTENCE & INITIAL LOAD ---
+
     function init() {
     const savedScreen = localStorage.getItem('currentScreen');
     
-    // Only restore state for specific non-puzzle screens to avoid broken states
+
     if (savedScreen === 'round-2-transition-screen' || 
         savedScreen === 'round-3-selection-screen' || 
         savedScreen === 'round-3-story-screen' || 
         savedScreen === 'final-screen' || 
         savedScreen === 'victory-screen') {
             
-        showScreen(savedScreen); // Show the saved screen first
+        showScreen(savedScreen); 
 
-        // Special handling for the transition screen
+
         if (savedScreen === 'round-2-transition-screen') {
-             // Make sure the button to proceed is visible
+           
              proceedToRound3Button.classList.remove('hidden');
-             // Display generic text since we lost the win/loss state on refresh
+         
              round1ResultHeading.innerText = "Round 1 Status"; 
              round2IntroParagraph.innerText = "Continue your journey from here.";
         }
         
-        // If loading team select, re-initialize buttons
+
         if (savedScreen === 'round-3-selection-screen') {
             initializeRound3Selection();
         }
-        // If loading story/final/victory, just showing the screen is enough
+ 
 
     } else {
-        // Default to welcome screen for puzzles or unknown/initial states
+        
         showScreen('welcome-screen');
-        localStorage.setItem('currentScreen', 'welcome-screen'); // Reset storage
+        localStorage.setItem('currentScreen', 'welcome-screen'); 
     }
 }
 
 init();
     
-    init(); // Run the initial load function
+    init(); 
 });
