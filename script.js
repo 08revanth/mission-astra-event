@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    
+ 
     const ROUND_1_TIME_LIMIT_MINS = 20;
     const JIGSAW_ROWS = 6;
     const JIGSAW_COLS = 6;
@@ -249,7 +249,7 @@ Suddenly, the heavens darkened. The Almighty Asura unleashed his full wrath, eye
 What fate awaits the warriors now? Will they survive Asura's ultimate rage, or is this just the beginning of an even greater battle?`, correctSequence: ["Brahmastra", "Vayu Astra", "Pashupatastra", "Agni Astra", "Vajra Astra"] },
     ];
 
-   
+
     const screens = document.querySelectorAll('.screen');
     const startMissionButton = document.getElementById('start-mission-button');
     const startRound1Button = document.getElementById('start-round-1-button');
@@ -272,17 +272,18 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
     const finalOutcomeText = document.getElementById('final-outcome-text');
     const failureMessage = document.getElementById('failure-message');
 
-
+ 
     let round1TimerInterval;
     let draggedJigsawPiece = null;
     let round1CompletedSuccessfully = false;
     let currentTeamChallenge = null;
     let draggedAstraElement = null;
 
- 
+    
     function showScreen(screenId) {
         screens.forEach(s => s.classList.add('hidden'));
         document.getElementById(screenId).classList.remove('hidden');
+        // NEW: Save the current screen to localStorage
         localStorage.setItem('currentScreen', screenId);
     }
 
@@ -434,18 +435,18 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
-
     function selectTeamForRound3(event) {
         const teamId = event.target.dataset.teamId;
         currentTeamChallenge = teamChallenges.find(c => c.team == teamId);
 
         const enteredKey = prompt(`The Oracle demands the secret key for Team ${teamId}:`);
         
-  
+
         if (!enteredKey) {
             return; 
         }
         
+        // Compare entered key with the correct key (case-insensitive)
         if (enteredKey.trim().toUpperCase() === currentTeamChallenge.secretKey.toUpperCase()) {
             r3TeamTitle.innerText = `TEAM ${teamId}'S CHALLENGE`;
             r3StoryDisplay.innerText = teamChallenges[teamId - 1].asuraForm;
@@ -521,11 +522,11 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
         }
     }
 
-
+  
     function init() {
     const savedScreen = localStorage.getItem('currentScreen');
     
-
+   
     if (savedScreen === 'round-2-transition-screen' || 
         savedScreen === 'round-3-selection-screen' || 
         savedScreen === 'round-3-story-screen' || 
@@ -536,21 +537,20 @@ What fate awaits the warriors now? Will they survive Asura's ultimate rage, or i
 
 
         if (savedScreen === 'round-2-transition-screen') {
-           
+
              proceedToRound3Button.classList.remove('hidden');
-         
+      
              round1ResultHeading.innerText = "Round 1 Status"; 
              round2IntroParagraph.innerText = "Continue your journey from here.";
         }
-        
-
+       
         if (savedScreen === 'round-3-selection-screen') {
             initializeRound3Selection();
         }
- 
+       
 
     } else {
-        
+      
         showScreen('welcome-screen');
         localStorage.setItem('currentScreen', 'welcome-screen'); 
     }
