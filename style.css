@@ -5,9 +5,9 @@ html, body { height: 100%; width: 100%; overflow: hidden; font-family: 'Cinzel',
 
 
 .header-logo { position: fixed; top: 20px; left: 20px; width: 80px; height: auto; z-index: 10; opacity: 0.7; }
-.background-logo { position: fixed; width: 120px; height: 120px; background-size: contain; background-repeat: no-repeat; opacity: 0.08; z-index: 0; }
+.background-logo { position: fixed; width: 120px; height: 120px; background-size: contain; background-repeat: no-repeat; opacity: 0.08; z-index: 0; pointer-events: none; /* Make logos unclickable */ }
 .logo-top-left { top: 30px; left: 30px; background-image: url('logo-glyph.png'); }
-.logo-top-right { top: 30px; right: 30px; background-image: url('logo-asura.png'); }
+.logo-top-right { top: 30px; right: 30px; background-image: url('x.jpg'); } /* UPDATED LOGO */
 
 
 .screen { width: 90%; max-width: 1200px; padding: 20px 40px 40px 40px; background-color: rgba(0, 0, 0, 0.75); border-radius: 15px; box-shadow: 0 0 30px rgba(138, 43, 226, 0.5), 0 0 60px rgba(0, 230, 230, 0.3); border: 1px solid var(--color-accent-purple); display: flex; flex-direction: column; justify-content: flex-start; align-items: center; min-height: 80vh; max-height: 90vh; overflow-y: auto; position: relative; z-index: 1; }
@@ -41,54 +41,33 @@ p { font-size: 1.3em; max-width: 900px; margin: 18px auto; line-height: 1.6; col
 #r3-story-display { white-space: pre-wrap; text-align: left; background-color: rgba(0,0,0,0.3); padding: 20px; border-radius: 5px; border-left: 3px solid var(--color-secondary); max-height: 50vh; overflow-y: auto; }
 
 
-#round-1-screen { max-width: 1300px; }
+#round-1-screen { max-width: 95%; width: auto; /* Allow screen to fit content */ }
 #timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8em; color: var(--color-accent-orange); text-shadow: 0 0 10px var(--color-accent-orange); margin-bottom: 15px; }
-.puzzle-area { display: flex; gap: 30px; margin-top: 15px; justify-content: center; align-items: flex-start; width: 100%; flex-wrap: wrap; }
-.puzzle-left-panel { display: flex; flex-direction: column; gap: 20px; align-items: center; flex-shrink: 0; }
-.puzzle-reference, #jigsaw-pieces-container { background-color: var(--color-dark-element); padding: 15px; border-radius: 10px; border: 2px solid var(--color-accent-purple); box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
+.puzzle-area { display: flex; gap: 20px; margin-top: 15px; justify-content: center; align-items: flex-start; width: 100%; flex-wrap: wrap; }
+.puzzle-left-panel { display: flex; flex-direction: column; gap: 20px; align-items: center; flex-shrink: 0; max-width: 300px; /* Limit width of left panel */ }
+.puzzle-reference, #jigsaw-pieces-container { width: 100%; /* Make containers fill left panel */ background-color: var(--color-dark-element); padding: 15px; border-radius: 10px; border: 2px solid var(--color-accent-purple); box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
 .puzzle-reference h3, #jigsaw-pieces-container h3 { font-size: 1.4em; margin-bottom: 10px; color: var(--color-secondary); }
-.reference-image { width: 250px; height: 250px; border: 1px solid var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); }
-#jigsaw-board { width: 100%; max-width: 600px; aspect-ratio: 1 / 1; height: auto; border: 3px solid var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 0, 0.7), 0 0 40px rgba(0, 230, 230, 0.5); background-color: rgba(0, 0, 0, 0.4); display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); flex-shrink: 1; min-width: 250px; }
-#jigsaw-pieces-container {
-    width: 90%; /* Keep relative width */
-    max-width: 520px;
-    background-color: var(--color-dark-element);
-    padding: 10px; /* Reduced padding slightly */
-    border-radius: 10px;
-    border: 2px solid var(--color-accent-purple);
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-}
-#jigsaw-pieces {
-    width: 100%; /* Fill the container */
-    height: 270px; /* Adjusted height slightly */
-    border: 2px solid var(--color-accent-orange); /* Slightly thinner border */
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Slightly smaller shadow */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px; /* Slightly reduced gap */
-    padding: 8px; /* Match the gap */
-    justify-content: flex-start;
-    align-content: flex-start;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 8px; /* Slightly smaller radius */
-    overflow-y: auto;
-}
+.reference-image { width: 100%; height: auto; max-width: 250px; aspect-ratio: 1/1; border: 1px solid var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); display: block; margin: 0 auto; }
+#jigsaw-board { width: 100%; max-width: 600px; aspect-ratio: 1 / 1; height: auto; border: 3px solid var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 0, 0.7), 0 0 40px rgba(0, 230, 230, 0.5); background-color: rgba(0, 0, 0, 0.4); display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); flex-grow: 1; /* Allow board to take space */ flex-shrink: 1; min-width: 280px; }
+#jigsaw-pieces-container { width: 100%; }
+#jigsaw-pieces { width: 100%; height: 270px; border: 2px solid var(--color-accent-orange); box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; justify-content: flex-start; align-content: flex-start; background-color: rgba(0, 0, 0, 0.4); border-radius: 8px; overflow-y: auto; }
 #jigsaw-pieces.drag-over { border-color: var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
-.jigsaw-piece { box-sizing: border-box; border: 1px solid var(--color-secondary); cursor: grab; transition: transform 0.1s ease-out; }
+.jigsaw-piece { box-sizing: border-box; border: 1px solid var(--color-secondary); cursor: grab; transition: transform 0.1s ease-out; background-repeat: no-repeat; } /* Added no-repeat */
 .jigsaw-piece.locked { cursor: not-allowed; }
 .jigsaw-piece.pre-solved { opacity: 0.8; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
-.jigsaw-slot { box-sizing: border-box; border: 1px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.2); }
+.jigsaw-slot { box-sizing: border-box; border: 1px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.2); overflow: hidden; } /* Added overflow hidden */
 .jigsaw-slot.drag-over { background-color: rgba(0, 255, 0, 0.2); border: 1px solid var(--color-primary); }
-#jigsaw-status { margin-top: 15px; height: 30px; font-size: 1.4em; font-family: 'Orbitron', sans-serif; color: var(--color-accent-orange); text-shadow: 0 0 8px var(--color-accent-orange); font-style: normal; }
+#jigsaw-status { margin-top: 15px; height: 30px; font-size: 1.4em; font-family: 'Orbitron', sans-serif; color: var(--color-accent-orange); text-shadow: 0 0 8px var(--color-accent-orange); font-style: normal; display: none; /* HIDE SCORE COUNTER */ }
 
 
 #team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
 .team-button { padding: 20px 30px; font-size: 1.2em; font-family: 'Orbitron', sans-serif; background-color: var(--color-dark-element); color: var(--color-secondary); border: 2px solid var(--color-secondary); border-radius: 5px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(0, 230, 230, 0.5); text-transform: uppercase; }
 .team-button:hover { background-color: var(--color-secondary); color: var(--color-dark-bg); box-shadow: 0 0 20px var(--color-secondary), 0 0 30px var(--color-accent-purple); transform: translateY(-2px); }
-#challenge-area { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
-#sequence-container, #astra-bank { padding: 20px; border: 2px solid var(--color-accent-purple); border-radius: 10px; background-color: rgba(44, 3, 74, 0.5); min-width: 320px; box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); }
-.sequence-slot { min-height: 70px; width: 280px; margin: 12px auto; border: 2px dashed var(--color-primary); border-radius: 5px; display: flex; justify-content: center; align-items: center; color: rgba(0, 255, 0, 0.6); background-color: rgba(0, 0, 0, 0.3); font-size: 1.1em; text-transform: uppercase; transition: all 0.2s ease; }
-.astra-item { height: 60px; width: 280px; margin: 12px auto; background-color: var(--color-dark-element); border: 1px solid var(--color-accent-orange); border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 1.1em; cursor: grab; color: var(--color-accent-orange); text-shadow: 0 0 5px var(--color-accent-orange); transition: all 0.2s ease; box-shadow: 0 0 8px rgba(255, 165, 0, 0.5); text-transform: uppercase; }
+#challenge-area { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; width: 100%; } /* Added width 100% */
+#sequence-container, #astra-bank { padding: 20px; border: 2px solid var(--color-accent-purple); border-radius: 10px; background-color: rgba(44, 3, 74, 0.5); min-width: 320px; box-shadow: 0 0 15px rgba(138, 43, 226, 0.5); flex-basis: 320px; /* Added flex-basis */ }
+.sequence-slot { min-height: 70px; width: 100%; /* Make slots fill container */ margin: 12px auto; border: 2px dashed var(--color-primary); border-radius: 5px; display: flex; justify-content: center; align-items: center; color: rgba(0, 255, 0, 0.6); background-color: rgba(0, 0, 0, 0.3); font-size: 1.1em; text-transform: uppercase; transition: all 0.2s ease; overflow: hidden; /* Added overflow hidden */ }
+.astra-item { height: 60px; width: 100%; /* Make items fill container */ margin: 0; /* Remove margin */ background-color: var(--color-dark-element); border: 1px solid var(--color-accent-orange); border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 1.1em; cursor: grab; color: var(--color-accent-orange); text-shadow: 0 0 5px var(--color-accent-orange); transition: all 0.2s ease; box-shadow: 0 0 8px rgba(255, 165, 0, 0.5); text-transform: uppercase; }
+#astra-bank .astra-item { margin-bottom: 12px; } /* Add margin only in bank */
 #astra-bank.drag-over, .sequence-slot.drag-over { background-color: rgba(0, 255, 0, 0.2); box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); }
 
 
@@ -101,5 +80,5 @@ p { font-size: 1.3em; max-width: 900px; margin: 18px auto; line-height: 1.6; col
 @keyframes glow-pulse { from { transform: scale(1); box-shadow: 0 0 20px var(--color-primary), 0 0 40px var(--color-secondary); } to { transform: scale(1.02); box-shadow: 0 0 30px var(--color-primary), 0 0 60px var(--color-secondary); } }
 
 
-@media (max-width: 1024px) { h1 {font-size: 3.5em;} h2 {font-size: 2.2em;} .puzzle-area { flex-direction: column; align-items: center; } #jigsaw-board { max-width: 480px; } .puzzle-left-panel {width: 100%; max-width: 480px;} #jigsaw-pieces-container { max-width: 100%; } #team-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { h1 {font-size: 3.5em;} h2 {font-size: 2.2em;} .puzzle-area { flex-direction: column; align-items: center; gap: 20px; } #jigsaw-board { max-width: 480px; } .puzzle-left-panel {width: 100%; max-width: 480px;} #jigsaw-pieces-container { max-width: 100%; } #team-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .screen {padding: 15px;} h1 {font-size: 2.5em;} h2 {font-size: 1.8em;} #jigsaw-board { max-width: 90vw; min-width: 280px; } .puzzle-left-panel {max-width: 90vw;} #jigsaw-pieces { height: 180px; } #team-grid { grid-template-columns: repeat(2, 1fr); } .victory-title { font-size: 4em;} .victory-image {max-width: 250px;} }
