@@ -49,21 +49,28 @@ p { font-size: 1.3em; max-width: 900px; margin: 18px auto; line-height: 1.6; col
 .puzzle-reference h3, #jigsaw-pieces-container h3 { font-size: 1.4em; margin-bottom: 10px; color: var(--color-secondary); }
 .reference-image { width: 250px; height: 250px; border: 1px solid var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); }
 #jigsaw-board { width: 100%; max-width: 600px; aspect-ratio: 1 / 1; height: auto; border: 3px solid var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 0, 0.7), 0 0 40px rgba(0, 230, 230, 0.5); background-color: rgba(0, 0, 0, 0.4); display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); flex-shrink: 1; min-width: 250px; }
-#jigsaw-pieces-container { width: 90%; max-width: 520px; }
+#jigsaw-pieces-container {
+    width: 90%; /* Keep relative width */
+    max-width: 520px;
+    background-color: var(--color-dark-element);
+    padding: 10px; /* Reduced padding slightly */
+    border-radius: 10px;
+    border: 2px solid var(--color-accent-purple);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
 #jigsaw-pieces {
-    width: 100%;
-    height: 280px;
-    border: 3px solid var(--color-accent-orange);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+    width: 100%; /* Fill the container */
+    height: 270px; /* Adjusted height slightly */
+    border: 2px solid var(--color-accent-orange); /* Slightly thinner border */
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Slightly smaller shadow */
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-    /* --- MODIFIED --- */
-    justify-content: flex-start; /* Align pieces starting from the left */
-    align-content: flex-start; /* Align rows starting from the top */
+    gap: 8px; /* Slightly reduced gap */
+    padding: 8px; /* Match the gap */
+    justify-content: flex-start;
+    align-content: flex-start;
     background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
+    border-radius: 8px; /* Slightly smaller radius */
     overflow-y: auto;
 }
 #jigsaw-pieces.drag-over { border-color: var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
